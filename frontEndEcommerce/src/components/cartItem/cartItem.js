@@ -8,7 +8,9 @@ const CartItem = (props) => {
     "cart",
     JSON.stringify(useSelector((state) => state.cart))
   );
+  // const carts = useSelector((state) => state.cart);
   const { cartItem } = props;
+  // const ditpatch = useDispatch();
   const deleteItem = () => {
     if (window.confirm("Bạn chắc chắc muốn xóa không ?")) {
       const cart = {
@@ -17,9 +19,9 @@ const CartItem = (props) => {
       props.onDelete(cart);
     }
   };
-  // useEffect({
+  // useEffect(() => {
 
-  // })
+  // });
   const increaseQuantity = () => {
     const cart = {
       masp: cartItem.masp,
@@ -49,11 +51,6 @@ const CartItem = (props) => {
       <tr>
         <td>{cartItem.name}</td>
         <td>
-          {/* <img
-            src={cartItem.img}
-            className="img-fluid rounded-top rounded-bottom itemImg"
-            alt=""
-          /> */}
           <div
             style={{
               width: "100px",
@@ -72,6 +69,7 @@ const CartItem = (props) => {
                 height: "100px",
                 width: "100px",
                 margin: "0 auto",
+                borderRadius: "10px",
               }}
               object-fit="cover"
               alt="..."

@@ -14,6 +14,7 @@ const ThanhToanPage = () => {
   const ditpatch = useDispatch();
   const navi = useHistory();
   const totalBill = useRef(0);
+  // const [totalBill, setTotalBill] = useState(0);
   const [check, setCheck] = useState(false);
   const [tenNguoiNhan, setName] = useState("");
   const [diaChi, setDiaChi] = useState("");
@@ -21,16 +22,22 @@ const ThanhToanPage = () => {
   //   const [diaChi, setDiaChi] = useState("")
   const [loaiThanhToan, setLoaiThanhTien] = useState("Tiền mặt");
   // const [chiTietHoaDon, setChiTietHoaDon] = useState(carts);
-  useEffect(() => {
-    return () => {
-      totalBill.current = 0;
-    };
-  });
+  // useEffect(() => {
+  //   return () => {
+  //     carts.forEach(
+  //       (e) =>
+  //         (totalBill.current = Number(totalBill.current) + Number(e.totalPrice))
+  //       // setTotalBill(Number(totalBill.current) + Number(e.totalPrice))
+  //     );
+  //   };
+  // });
   if (carts.length > 0) {
     totalBill.current = 0;
+    // setTotalBill(0);
     carts.forEach(
       (e) =>
         (totalBill.current = Number(totalBill.current) + Number(e.totalPrice))
+      // setTotalBill(Number(totalBill.current) + Number(e.totalPrice))
     );
   }
   const hoanTatThanhToan = async () => {
@@ -49,19 +56,20 @@ const ThanhToanPage = () => {
             tenNguoiNhan: tenNguoiNhan,
             diaChi: diaChi,
             phoneNumber: phoneNumber,
-            tongTien: totalBill.current,
+            tongTien: Number(totalBill.current),
             loaiThanhToan: loaiThanhToan,
             chiTietHoaDon: carts,
           };
           await billCallApi("", "post", thongTin)
             .then((res) => {
               if (res.status === 200) {
+                // const index = carts.filter((element) => element <= 0);
+                ditpatch(deleteAllCartPayed(carts));
+                localStorage.setItem("cart", JSON.stringify(carts));
                 toast.success("Thanh toán thành công");
                 setTimeout(() => {
                   navi.push("/");
                 }, 2000);
-                ditpatch(deleteAllCartPayed(carts));
-                localStorage.setItem("cart", JSON.stringify(carts));
               }
             })
             .catch((err) => {
@@ -137,7 +145,7 @@ const ThanhToanPage = () => {
                       />
                       <label
                         className="form-check-label f-l"
-                        for="flexRadioDefault1"
+                        htmlFor="flexRadioDefault1"
                       >
                         Trả tiền mặt khi nhận hàng
                       </label>
@@ -154,7 +162,7 @@ const ThanhToanPage = () => {
                       />
                       <label
                         className="form-check-label f-l"
-                        for="flexRadioDefault2"
+                        htmlFor="flexRadioDefault2"
                       >
                         Thanh toán qua thẻ
                       </label>

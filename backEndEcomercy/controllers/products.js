@@ -1,8 +1,8 @@
 // import multer from "multer";
-import fs from "fs";
+// import fs from "fs";
 import { productModel } from "../models/productModel.js";
-import path from "path";
-import { mkdirp } from "mkdirp";
+// import path from "path";
+// import { mkdirp } from "mkdirp";
 //get products
 
 export const getProduct = async (req, res) => {
@@ -21,13 +21,8 @@ export const getProductById = async (req, res) => {
     const productsObject = req.body;
     console.log(productsObject);
     const products = await productModel.findById(productsObject._id);
-    res.status(200).json(products);
+    res.json(products);
     console.log("product", products);
-    // console.log(req.body);
-    // const book = await sachModel.findOne({ maSach: bookObject.maSach });
-    // res.status(200).json(book);
-
-    // console.log(res.data.accessToken);
   } catch (err) {
     res.status(500).json({ error: err });
     console.log("err");
@@ -35,9 +30,9 @@ export const getProductById = async (req, res) => {
 };
 export const getProductByMaSp = async (req, res) => {
   try {
-    const productsObject = req.body;
-    console.log(productsObject);
-    const products = await productModel.findOne({ masp: productsObject.masp });
+    const masp = req.params.masp;
+    // console.log(productsObject);
+    const products = await productModel.findOne({ masp: masp });
     res.status(200).json(products);
     console.log("product", products);
     // console.log(req.body);

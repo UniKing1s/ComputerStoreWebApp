@@ -133,7 +133,7 @@ const CardItem = (props) => {
             </p>
             <button
               type="button"
-              className="btn btn-primary mb-3 mr-10"
+              className="btn btn-primary mb-3 mr-10 "
               onClick={() => addToCart()}
             >
               Thêm vào giỏ hàng
@@ -189,7 +189,7 @@ const CardItem = (props) => {
                 </NavLink>
                 <button
                   type="button"
-                  className="btn btn-danger mb-3 mr-10"
+                  className="btn btn-danger mb-3"
                   onClick={() => onDelete(product.masp, product.img)}
                 >
                   Xóa

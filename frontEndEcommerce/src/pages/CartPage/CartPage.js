@@ -3,26 +3,58 @@ import { NavLink } from "react-router-dom";
 import CartItem from "../../components/cartItem/cartItem";
 import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
-import { deleteCart, updateCart } from "../../redux/cartSlice";
+import { deleteCart, fixPriceAndSale, updateCart } from "../../redux/cartSlice";
 import { useHistory } from "react-router-dom";
+import productCallApi from "../../utils/apiCaller";
 
 const CartPage = () => {
   const carts = useSelector((state) => state.cart);
   const accountLoged = useSelector((state) => state.account.logged);
   const totalBill = useRef(0);
   const navi = useHistory();
-  useEffect(() => {
-    return () => {
-      totalBill.current = 0;
-    };
-  }, [carts]);
+  const dispatch = useDispatch();
+  for (let i of carts) {
+    productCallApi(`byMaSp/${i.masp}`, "GET", null)
+      .then((res) => {
+        if (res.status === 200) {
+          const item = res.data;
+          // console.log(item);
+          // console.log(res.data.sale);
+          // console.log(res.data.price);
+          if (
+            Number(i.price) !== Number(res.data.price) ||
+            Number(i.sale) !== Number(res.data.sale)
+          ) {
+            // console.log(res.data);
+            dispatch(fixPriceAndSale(item));
+            localStorage.setItem("cart", JSON.stringify(carts));
+          }
+        }
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  }
+  localStorage.setItem("cart", JSON.stringify(carts));
+  carts.forEach(
+    (e) =>
+      (totalBill.current = Number(totalBill.current) + Number(e.totalPrice))
+  );
+  // useEffect(() => {
+  //   return () => {
+
+  //     // i.masp
+  //   };
+  //   // totalBill.current = 0;
+  // });
   if (carts.length > 0) {
+    totalBill.current = 0;
     carts.forEach(
       (e) =>
         (totalBill.current = Number(totalBill.current) + Number(e.totalPrice))
     );
   }
-  console.log(carts);
+  // console.log(carts);
   localStorage.setItem(
     "cart",
     JSON.stringify(useSelector((state) => state.cart))
@@ -103,8 +135,6 @@ const CartPage = () => {
                   <tbody>{showProductItem()}</tbody>
                 </table>
               </div>
-
-              {/* <ProductList products={products} onDelete={this.onDelete} /> */}
             </div>
           </div>
           <div className="form-floating mb-3">

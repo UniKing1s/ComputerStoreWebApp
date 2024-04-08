@@ -34,9 +34,10 @@ app.use(
 // use to show image
 app.use(express.static("public"));
 ////sử dụng multer để sử lí upload file
-// Tạo thư mục upload
+// Tự tạo thư mục upload nếu chưa tồn tại
 const uploadDir = path.join(process.cwd(), "public/images");
 mkdirp.sync(uploadDir);
+// Thực hiện thêm ảnh từ request gửi tới
 const storage = multer.diskStorage({
   destination: uploadDir,
   filename: (req, file, cb) => {

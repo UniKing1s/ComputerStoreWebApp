@@ -64,7 +64,7 @@ class HomePage extends Component {
   };
   showCardItem = () => {
     var result = null;
-    console.log(this.state.products.length);
+    // console.log(this.state.products.length);
 
     if (this.state.products.length > 0) {
       result = this.state.products.map((product, index) => {

@@ -52,9 +52,9 @@ const Header = () => {
   };
   const setSearchText = (e) => {
     searchText.current = e.target.value;
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
-  console.log(account);
+  // console.log(account);
   return (
     <div>
       <>

@@ -33,7 +33,7 @@ router.post("/search/", getSearchProduct);
 router.post("/uploadImage/", createImage);
 //get product byId()
 router.put("/byId/", getProductById);
-router.put("/byMaSp/", getProductByMaSp);
+router.get("/byMaSp/:masp", getProductByMaSp);
 // router.delete("/product", deleteProduct);
 //delete product
 router.delete("/", deleteProduct);

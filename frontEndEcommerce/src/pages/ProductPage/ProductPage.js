@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { updateCart } from "../../redux/cartSlice";
 import SaveCartItem from "../../service/SaveCartItem";
 import { imgAPI_URL } from "../../constants/Config";
+import "./ProductPage.scss";
 // import ButtonAddToCart from "../../components/buttonAddToCart/buttonAddToCart";
 
 const ProductPage = (props) => {
@@ -22,14 +23,6 @@ const ProductPage = (props) => {
     productCallApi("byId/", "put", productId)
       .then((res) => {
         product.current = res.data;
-        // product.masp = res.data.masp;
-        // product.name = res.data.name;
-        // product.type = res.data.type;
-        // product.price = res.data.price;
-        // product.sale = res.data.sale;
-        // product.status = res.data.status;
-        // product.img = res.data.img;
-        // product.decribtion = res.data.decribtion;
         loaded.current = true;
         console.log(product);
         setLoading(false);
@@ -48,7 +41,9 @@ const ProductPage = (props) => {
         img: product.current.img,
         quantity: Number(quantity),
         totalPrice:
-          Number(product.current.price) * (1 - product.current.sale / 100),
+          Number(quantity) *
+          Number(product.current.price) *
+          (1 - product.current.sale / 100),
       };
       dispatch(updateCart(cart));
       toast.success("Thêm vào giỏ hàng thành công");
@@ -160,7 +155,7 @@ const ProductPage = (props) => {
                         onChange={(e) => setQuantity(e.target.value)}
                       />
                       <button
-                        className="btn btn-outline-dark flex-shrink-0"
+                        className="btn btn-primary flex-shrink-0"
                         type="button"
                         onClick={() => addToCart()}
                       >

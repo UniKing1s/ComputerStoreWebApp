@@ -14,8 +14,8 @@ class ListProduct extends Component {
     super(props);
     this.state = {
       products: [],
-      hidden: false,
-      id: null,
+      // hidden: false,
+      // id: null,
     };
   }
 
