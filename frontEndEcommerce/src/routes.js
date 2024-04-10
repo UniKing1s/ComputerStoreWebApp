@@ -10,6 +10,10 @@ import CartPage from "./pages/CartPage/CartPage";
 import EditProductPage from "./pages/ProductManagerPage/EditProductPage/EditProductPage";
 import ThanhToanPage from "./pages/ThanhToanPage/thanhToanPage";
 import SearchPage from "./pages/SearchPage/SearchPage";
+import ListUser from "./pages/UserManagerPage/UserListPage/ListUser";
+import EditUserPage from "./pages/UserManagerPage/EditUserPage/EditUserPage";
+import BillListPage from "./pages/BillManagerPage/BillListPage/BillListPage";
+import BillDetailPage from "./pages/BillManagerPage/BillDetailPage/BillDetailPage";
 
 const update = true;
 const routes = [
@@ -63,6 +67,26 @@ const routes = [
     path: "/search",
     exact: false,
     main: () => <SearchPage />,
+  },
+  {
+    path: "/userManager",
+    exact: false,
+    main: () => <ListUser />,
+  },
+  {
+    path: "/updateUser",
+    exact: false,
+    main: () => <EditUserPage />,
+  },
+  {
+    path: "/billManager",
+    exact: false,
+    main: () => <BillListPage />,
+  },
+  {
+    path: "/ChiTietBill",
+    exact: false,
+    main: () => <BillDetailPage />,
   },
   {
     path: "*",

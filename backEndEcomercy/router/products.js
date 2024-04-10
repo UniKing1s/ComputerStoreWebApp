@@ -8,6 +8,7 @@ import {
   getProductByMaSp,
   updateProduct,
   getSearchProduct,
+  updateProductPayed,
 } from "../controllers/products.js";
 // import multer from "multer";
 const router = express.Router();
@@ -39,4 +40,6 @@ router.get("/byMaSp/:masp", getProductByMaSp);
 router.delete("/", deleteProduct);
 //update product
 router.post("/update/", updateProduct);
+//update product quantity in db
+router.patch("/updatePayed/", updateProductPayed);
 export default router;

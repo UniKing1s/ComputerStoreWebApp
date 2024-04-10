@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { billCallApi } from "../../utils/apiCaller";
+import productCallApi, { billCallApi } from "../../utils/apiCaller";
 import { deleteAllCartPayed } from "../../redux/cartSlice";
 // import { delete } from "../../redux/cartSlice";
 
@@ -11,7 +11,7 @@ const ThanhToanPage = () => {
   const accountLoged = useSelector((state) => state.account.logged);
   const accountUserName = useSelector((state) => state.account.username);
   const carts = useSelector((state) => state.cart);
-  const ditpatch = useDispatch();
+  const dispatch = useDispatch();
   const navi = useHistory();
   const totalBill = useRef(0);
   // const [totalBill, setTotalBill] = useState(0);
@@ -60,21 +60,48 @@ const ThanhToanPage = () => {
             loaiThanhToan: loaiThanhToan,
             chiTietHoaDon: carts,
           };
-          await billCallApi("", "post", thongTin)
+          await billCallApi("", "POST", thongTin)
             .then((res) => {
               if (res.status === 200) {
-                // const index = carts.filter((element) => element <= 0);
-                ditpatch(deleteAllCartPayed(carts));
-                localStorage.setItem("cart", JSON.stringify(carts));
-                toast.success("Thanh toán thành công");
-                setTimeout(() => {
-                  navi.push("/");
-                }, 2000);
+                productCallApi("updatePayed/", "PATCH", { products: carts })
+                  .then((res1) => {
+                    if (res1.status === 200) {
+                      dispatch(deleteAllCartPayed(carts));
+                      localStorage.setItem("cart", JSON.stringify(carts));
+                      toast.success("Thanh toán thành công");
+                      setTimeout(() => {
+                        navi.push("/");
+                      }, 2000);
+                    } else {
+                      toast.error("Lỗi thanh toán");
+                    }
+                  })
+                  .catch((err) => {
+                    toast.error(err);
+                  });
               }
             })
             .catch((err) => {
+              console.log(err);
               toast.error("Lỗi không thể thanh toán");
             });
+          // console.log(carts);
+          // productCallApi("updatePayed/", "PATCH", { products: carts })
+          //   .then((res) => {
+          //     if (res.status === 200) {
+          //       dispatch(deleteAllCartPayed(carts));
+          //       localStorage.setItem("cart", JSON.stringify(carts));
+          //       toast.success("Thanh toán thành công");
+          //       setTimeout(() => {
+          //         navi.push("/");
+          //       }, 2000);
+          //     } else {
+          //       toast.error("Lỗi thanh toán");
+          //     }
+          //   })
+          //   .catch((err) => {
+          //     toast.error(err);
+          //   });
         }
       }
     }

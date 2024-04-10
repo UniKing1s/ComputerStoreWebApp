@@ -46,12 +46,12 @@ export function brandCallApi(endpoint, method, body) {
   });
 }
 
-export function userCallApi(endpoint, method, body) {
-  return axios({
-    method: method,
-    url: `${Config.API_URL}/accounts/${endpoint}`,
-    data: body,
-  }).catch((error) => {
-    console.log(error);
-  });
-}
+// export function userCallApi(endpoint, method, body) {
+//   return axios({
+//     method: method,
+//     url: `${Config.API_URL}/accounts/${endpoint}`,
+//     data: body,
+//   }).catch((error) => {
+//     console.log(error);
+//   });
+// }

@@ -20,7 +20,7 @@ router.get("/", getAccount);
 //get account to login
 router.post("/login/", getAccountToLogin);
 //get account by user
-router.post("/getByUsser/", getAccountByUser);
+router.get("/getByUsser/:username", getAccountByUser);
 //create account
 router.post("/", createAccount);
 // router.delete("/product", deleteProduct);

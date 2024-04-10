@@ -159,3 +159,37 @@ export const directPaying = async (req, res) => {
     console.log("err");
   }
 };
+
+export const updateProductPayed = async (req, res) => {
+  try {
+    // {
+    //   "products":[
+    //     {
+    //     "masp":1,
+    //     "quantity": 20
+    //     },
+    //     {
+    //     "masp":2,
+    //     "quantity": 20
+    //     }
+    //   ]
+    // }
+    const updateProducts = req.body.products;
+    // console.log(updateProducts);
+    for (let product of updateProducts) {
+      await doUpdateProduct(product.masp, product.quantity);
+    }
+    // await product.save();
+    res.status(200).json({ status: "success" });
+    // console.log("product", product);
+  } catch (err) {
+    res.status(500).json({ error: err });
+    console.log("err");
+  }
+};
+const doUpdateProduct = async (masp, quantity) => {
+  await productModel.updateOne(
+    { masp: masp },
+    { $inc: { quantity: -quantity } }
+  );
+};

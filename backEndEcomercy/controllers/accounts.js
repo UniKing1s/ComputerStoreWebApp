@@ -14,14 +14,15 @@ export const getAccount = async (req, res) => {
 };
 export const getAccountByUser = async (req, res) => {
   try {
-    const username = req.body.username;
-    const accounts = await accountModel.findOne({ username: username });
-    if (accounts) {
-      res.status(200).json({ info: "tài khoản đúng" });
+    const username = req.params.username;
+    // console.log(username);
+    const account = await accountModel.findOne({ username: username });
+    if (account) {
+      res.status(200).json({ account });
     } else {
       res.status(500).json({ err: "không có dữ liệu" });
     }
-    console.log("account", accounts);
+    console.log("account", account);
   } catch (err) {
     res.status(500).json({ error: err });
     console.log("err");

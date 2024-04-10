@@ -19,7 +19,14 @@ class ProductItem extends Component {
         <td>{product.masp}</td>
         <td>{product.name}</td>
         <td>{product.quantity}</td>
-        <td>{product.price}</td>
+        <td>
+          <strong>
+            {new Intl.NumberFormat("vi", {
+              currency: "VND",
+              style: "currency",
+            }).format(product.price)}
+          </strong>
+        </td>
         <td>{product.sale}</td>
         <td>{product.decribtion}</td>
         <td>

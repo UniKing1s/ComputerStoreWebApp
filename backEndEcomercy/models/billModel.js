@@ -29,6 +29,16 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    ngayHoaDon: {
+      type: String,
+      // default: new Date(),
+      required: false,
+    },
+    tinhtrang: {
+      type: Boolean,
+      default: 0,
+      required: false,
+    },
     chiTietHoaDon: {
       type: Object,
       required: true,

@@ -115,7 +115,7 @@ const Header = () => {
                         </li>
                       </ul>
                     </li>
-                    {/* <li className="nav-item dropdown">
+                    <li className="nav-item dropdown">
                       <a
                         className="nav-link dropdown-toggle"
                         data-bs-toggle="dropdown"
@@ -128,17 +128,31 @@ const Header = () => {
                       </a>
                       <ul className="dropdown-menu">
                         <li>
-                          <a className="dropdown-item" href="product">
+                          <NavLink className="dropdown-item" to="/userManager">
                             Danh sách tài khoản
-                          </a>
-                        </li>
-                        <li>
-                          <a className="dropdown-item" href="addProduct">
-                            Thêm sản tài khoản
-                          </a>
+                          </NavLink>
                         </li>
                       </ul>
-                    </li> */}
+                    </li>
+                    <li className="nav-item dropdown">
+                      <a
+                        className="nav-link dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        href="/"
+                        role="button"
+                        aria-expanded="false"
+                        style={{ color: "white" }}
+                      >
+                        Quản lý hóa đơn
+                      </a>
+                      <ul className="dropdown-menu">
+                        <li>
+                          <NavLink className="dropdown-item" to="/billManager">
+                            Danh sách hóa đơn
+                          </NavLink>
+                        </li>
+                      </ul>
+                    </li>
                   </>
                 ) : (
                   <></>
