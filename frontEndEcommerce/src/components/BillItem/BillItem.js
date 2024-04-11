@@ -1,18 +1,29 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 // import "./UserItem.scss";
 import { NavLink } from "react-router-dom";
 class BillItem extends Component {
+  // account = null;
   onDelete = (mahoadon, username) => {
-    if (window.confirm("Bạn chắc chắc muốn xóa không ?")) {
-      console.log("mhd: " + mahoadon + "and user: " + username);
+    if (window.confirm("Bạn chắc chắc muốn hoàn lại hóa đơn không ?")) {
+      // console.log("mhd: " + mahoadon + "and user: " + username);
       this.props.onDelete(mahoadon, username);
     }
   };
 
   render() {
+    const { account } = this.props;
+    // this.account = account;
     var { bill, index } = this.props;
     var tinhtrang = bill.tinhtrang ? "Đã thanh toán" : "Chưa thanh toán";
     var statusClass = bill.tinhtrang ? "success" : "danger";
+    //date from bill
+    const date = new Date(bill.ngayHoaDon);
+    const oneDayLater = new Date(date.setDate(date.getDate() + 1));
+    const today = new Date();
+    // console.log("Mabill: " + bill.maHoaDon);
+    // console.log("onedaylater: " + oneDayLater);
+    // console.log("today: " + today);
     return (
       <tr className="">
         <td>{index + 1}</td>
@@ -42,17 +53,30 @@ class BillItem extends Component {
           >
             Xem chi tiết
           </NavLink>
-          <button
-            type="button"
-            className="btn btn-danger mr-10"
-            onClick={() => this.onDelete(bill.maHoaDon, bill.username)}
-          >
-            Hoàn trả
-          </button>
+          {(today.getTime() >= oneDayLater.getTime() && !bill.tinhtrang) ||
+          (account.role === 0 && account.logged) ? (
+            <>
+              <button
+                type="button"
+                className="btn btn-danger mr-10"
+                onClick={() => this.onDelete(bill.maHoaDon, bill.username)}
+              >
+                Hoàn trả
+              </button>
+            </>
+          ) : (
+            <>
+              <button type="button" className="btn btn-danger mr-10" disabled>
+                Hoàn trả
+              </button>
+            </>
+          )}
         </td>
       </tr>
     );
   }
 }
-
-export default BillItem;
+const mapStateToProps = (state) => ({
+  account: state.account, // Replace with your slice/property
+});
+export default connect(mapStateToProps)(BillItem);

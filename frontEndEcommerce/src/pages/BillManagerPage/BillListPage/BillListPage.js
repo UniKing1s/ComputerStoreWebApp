@@ -5,6 +5,10 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { billCallApi } from "../../../utils/apiCaller";
 import BillListComponent from "../../../components/BillList/BillList";
+import CheckLogin from "../../../service/checkLogin";
+import GetAccountRole from "../../../service/getAccountRole";
+import GetAccountUser from "../../../service/getAccountUser";
+import { connect } from "react-redux";
 
 class BillListPage extends Component {
   constructor(props) {
@@ -13,19 +17,34 @@ class BillListPage extends Component {
       bills: [],
     };
   }
-
+  accountFind = null;
   loading = true;
   componentDidMount() {
-    billCallApi("", "GET", null)
-      .then((res) => {
-        this.setState({
-          bills: res.data,
+    if (this.accountFind.logged && this.accountFind.role === 0) {
+      billCallApi("", "GET", null)
+        .then((res) => {
+          this.setState({
+            bills: res.data,
+          });
+        })
+        .catch((err) => {
+          toast.error("Không có hóa đơn nào tồn tại");
         });
-      })
-      .catch((err) => {
-        toast.error("Không có hóa đơn nào tồn tại");
-      });
-    this.loading = false;
+      this.loading = false;
+      return;
+    } else if (this.accountFind.logged && this.accountFind.role !== 0) {
+      billCallApi(`${this.accountFind.username}`, "GET", null)
+        .then((res) => {
+          this.setState({
+            bills: res.data,
+          });
+        })
+        .catch((err) => {
+          toast.error("Không có hóa đơn nào tồn tại");
+        });
+      this.loading = false;
+      return;
+    }
   }
   onDelete = (mahoadon, username) => {
     this.onAcceptDelete(mahoadon, username);
@@ -63,6 +82,9 @@ class BillListPage extends Component {
     return result;
   };
   render() {
+    const { account } = this.props;
+    this.accountFind = account;
+    // console.log(account);
     return (
       <div>
         <ToastContainer />
@@ -95,4 +117,7 @@ class BillListPage extends Component {
     );
   }
 }
-export default BillListPage;
+const mapStateToProps = (state) => ({
+  account: state.account, // Replace with your slice/property
+});
+export default connect(mapStateToProps)(BillListPage);

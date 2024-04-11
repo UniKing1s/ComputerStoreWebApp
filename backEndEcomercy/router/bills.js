@@ -3,6 +3,7 @@ import {
   createBill,
   deleteBill,
   getAllBill,
+  getBillByUser,
   getBillByUserAndMaHoaDon,
 } from "../controllers/bills.js";
 
@@ -14,6 +15,8 @@ const router = express.Router();
 
 router.post("/", createBill);
 router.get("/", getAllBill);
-router.get("/geyBillByUserAndMaHD", getBillByUserAndMaHoaDon);
+router.get("/getBillByUserAndMaHD", getBillByUserAndMaHoaDon);
+router.get("/:username", getBillByUser);
+
 router.delete("/", deleteBill);
 export default router;

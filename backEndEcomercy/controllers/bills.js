@@ -56,6 +56,23 @@ export const getBillByUserAndMaHoaDon = async (req, res) => {
   }
 };
 
+export const getBillByUser = async (req, res) => {
+  try {
+    const username = req.params.username;
+    console.log(username);
+    const bills = await billModel.find({
+      username: username,
+    });
+    if (bills.length > 0) {
+      res.json(bills);
+    } else {
+      res.status(404).json({ error: "Không tồn tại bất kì hóa đơn nà0" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: "Lấy thông tin hóa đơn thất bại" });
+  }
+};
+
 export const deleteBill = async (req, res) => {
   try {
     const deleteBill = req.body;

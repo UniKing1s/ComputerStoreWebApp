@@ -246,14 +246,19 @@ const Header = () => {
                   ) : (
                     <>
                       <li>
-                        {/* <NavLink
-                          to="/"
-                          className="dropdown-item"
-                          style={{ background: "black", with: "100%" }}
-                          onClick={() => logoutSubmit()}
+                        <NavLink
+                          to="/billManager"
+                          style={{ width: "100%" }}
+                          className="btn btn-success my-2 my-sm-0"
+                          // type="submit"
                         >
-                          Đăng xuất
-                        </NavLink> */}
+                          Hóa đơn mua bán
+                        </NavLink>
+                      </li>
+                      <li>
+                        <hr className="dropdown-divider" />
+                      </li>
+                      <li>
                         <button
                           style={{ width: "100%", height: "100%" }}
                           className="btn btn-secondary my-2 my-sm-0"
