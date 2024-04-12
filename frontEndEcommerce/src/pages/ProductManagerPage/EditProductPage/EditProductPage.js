@@ -7,6 +7,8 @@ import productCallApi, {
 } from "../../../utils/apiCaller";
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const EditProductPage = () => {
   // state = {
   //   masp: 4,
@@ -27,6 +29,8 @@ const EditProductPage = () => {
   // const [decribtion, setDecribtion] = useState("");
   // const [status, setStatus] = useState("còn hàng");
   // const [img, setImg] = useState("");
+  const account = useSelector((state) => state.account);
+  const navi = useHistory();
   const [oldImg, setOldImg] = useState("");
   const [data, setData] = useState({});
   const changeImg = useRef(false);
@@ -61,7 +65,7 @@ const EditProductPage = () => {
   // };
   useEffect(() => {
     if (loading.current) {
-      const getData = async () => {
+      const _getData = async () => {
         await brandCallApi("", "get", {}).then((res) => {
           if (res.status === 200) {
             setBrands(res.data);
@@ -80,9 +84,12 @@ const EditProductPage = () => {
             loading.current = false;
           });
       };
-      getData();
+      if (account.logged && account.role === 0) {
+        _getData();
+      }
     }
   });
+
   // if (loading) {
   //   loadProduct();
   // }
@@ -183,184 +190,193 @@ const EditProductPage = () => {
         });
     }
   };
-  return (
-    <>
-      <ToastContainer />
-      <div className="container">
-        <div className="panel panel-primary">
-          <div className="panel-heading">
-            <h3 className="panel-tittle" style={{ textAlign: "center" }}>
-              Sửa sản phẩm
-            </h3>
-          </div>
-          <div className="panel-body">
-            <div className="form-floating mb-3">
-              <input
-                type="text"
-                className="form-control"
-                id="floatingInput"
-                placeholder="Tên sản phẩm"
-                name="name"
-                value={data.name}
-                onChange={(e) =>
-                  setData(Object.assign({}, data, { name: e.target.value }))
-                }
-              />
-              <label htmlFor="floatingInput">Tên sản phẩm</label>
+  if (account.role === 0 && account.logged) {
+    return (
+      <>
+        <ToastContainer />
+        <div className="container">
+          <div className="panel panel-primary">
+            <div className="panel-heading">
+              <h3 className="panel-tittle" style={{ textAlign: "center" }}>
+                Sửa sản phẩm
+              </h3>
             </div>
-            <div className="form-floating mb-3">
-              <input
-                type="number"
-                className="form-control"
-                id="floatingInput"
-                placeholder="Số lượng"
-                name="quantity"
-                value={data.quantity}
-                onChange={(e) =>
-                  setData(Object.assign({}, data, { quantity: e.target.value }))
-                }
-              />
-              <label htmlFor="floatingInput">Số lượng</label>
-            </div>
-            <div className="form-floating mb-3">
-              <input
-                type="number"
-                className="form-control"
-                id="floatingInput"
-                placeholder="Giá trị"
-                name="price"
-                value={data.price}
-                onChange={(e) =>
-                  setData(Object.assign({}, data, { price: e.target.value }))
-                }
-              />
-              <label htmlFor="floatingInput">Giá trị</label>
-            </div>
-            <div className="form-floating mb-3">
-              <input
-                type="number"
-                className="form-control"
-                id="floatingInput"
-                placeholder="Số lượng"
-                name="sale"
-                value={data.sale}
-                onChange={(e) =>
-                  setData(Object.assign({}, data, { sale: e.target.value }))
-                }
-              />
-              <label htmlFor="floatingInput">Giảm giá</label>
-            </div>
-            <div className="input-group mb-3">
-              <label className="input-group-text" htmlFor="inputGroupSelect01">
-                Loại
-              </label>
-              <select
-                className="form-select"
-                id="inputGroupSelect01"
-                name="type"
-                value={data.type}
-                onChange={(e) =>
-                  setData(Object.assign({}, data, { type: e.target.value }))
-                }
-              >
-                <option value="">Choose...</option>
-                {brands.length === 0 ? (
-                  <></>
-                ) : (
-                  brands.map((option, index) => (
-                    <option key={index} value={option.id}>
-                      {option.name}
-                    </option>
-                  ))
-                )}
-              </select>
-            </div>
-            <div className="form-floating mb-3">
-              <textarea
-                type="text"
-                className="form-control"
-                id="floatingInput"
-                placeholder="Mô tả sản phẩm"
-                name="sale"
-                value={data.decribtion}
-                onChange={(e) =>
-                  setData(
-                    Object.assign({}, data, { decribtion: e.target.value })
-                  )
-                }
-              />
-              <label htmlFor="floatingInput">Mô tả</label>
-            </div>
-            <div className="form-floating mb-3">
-              <div className="form-check form-switch">
+            <div className="panel-body">
+              <div className="form-floating mb-3">
                 <input
-                  className="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  id="flexSwitchCheckDefault"
-                  checked={data.status === "còn hàng" ? true : false}
-                  onChange={() => handleChangeStatus()}
+                  type="text"
+                  className="form-control"
+                  id="floatingInput"
+                  placeholder="Tên sản phẩm"
+                  name="name"
+                  value={data.name}
+                  onChange={(e) =>
+                    setData(Object.assign({}, data, { name: e.target.value }))
+                  }
                 />
-                <label
-                  className="form-check-label lbl"
-                  htmlFor="flexSwitchCheckDefault"
-                >
-                  {data.status === "còn hàng" ? "Còn hàng" : "Hết hàng"}
-                </label>
+                <label htmlFor="floatingInput">Tên sản phẩm</label>
               </div>
+              <div className="form-floating mb-3">
+                <input
+                  type="number"
+                  className="form-control"
+                  id="floatingInput"
+                  placeholder="Số lượng"
+                  name="quantity"
+                  value={data.quantity}
+                  onChange={(e) =>
+                    setData(
+                      Object.assign({}, data, { quantity: e.target.value })
+                    )
+                  }
+                />
+                <label htmlFor="floatingInput">Số lượng</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input
+                  type="number"
+                  className="form-control"
+                  id="floatingInput"
+                  placeholder="Giá trị"
+                  name="price"
+                  value={data.price}
+                  onChange={(e) =>
+                    setData(Object.assign({}, data, { price: e.target.value }))
+                  }
+                />
+                <label htmlFor="floatingInput">Giá trị</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input
+                  type="number"
+                  className="form-control"
+                  id="floatingInput"
+                  placeholder="Số lượng"
+                  name="sale"
+                  value={data.sale}
+                  onChange={(e) =>
+                    setData(Object.assign({}, data, { sale: e.target.value }))
+                  }
+                />
+                <label htmlFor="floatingInput">Giảm giá</label>
+              </div>
+              <div className="input-group mb-3">
+                <label
+                  className="input-group-text"
+                  htmlFor="inputGroupSelect01"
+                >
+                  Loại
+                </label>
+                <select
+                  className="form-select"
+                  id="inputGroupSelect01"
+                  name="type"
+                  value={data.type}
+                  onChange={(e) =>
+                    setData(Object.assign({}, data, { type: e.target.value }))
+                  }
+                >
+                  <option value="">Choose...</option>
+                  {brands.length === 0 ? (
+                    <></>
+                  ) : (
+                    brands.map((option, index) => (
+                      <option key={index} value={option.id}>
+                        {option.name}
+                      </option>
+                    ))
+                  )}
+                </select>
+              </div>
+              <div className="form-floating mb-3">
+                <textarea
+                  type="text"
+                  className="form-control"
+                  id="floatingInput"
+                  placeholder="Mô tả sản phẩm"
+                  name="sale"
+                  value={data.decribtion}
+                  onChange={(e) =>
+                    setData(
+                      Object.assign({}, data, { decribtion: e.target.value })
+                    )
+                  }
+                />
+                <label htmlFor="floatingInput">Mô tả</label>
+              </div>
+              <div className="form-floating mb-3">
+                <div className="form-check form-switch">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="flexSwitchCheckDefault"
+                    checked={data.status === "còn hàng" ? true : false}
+                    onChange={() => handleChangeStatus()}
+                  />
+                  <label
+                    className="form-check-label lbl"
+                    htmlFor="flexSwitchCheckDefault"
+                  >
+                    {data.status === "còn hàng" ? "Còn hàng" : "Hết hàng"}
+                  </label>
+                </div>
+              </div>
+              {/* <div className="form-floating mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="floatingInput"
+                  placeholder=""
+                  value={img}
+                  onChange={(event) => handleChangeImgInput(event)}
+                />
+                <label htmlFor="floatingInput">
+                  Hình ảnh (vd: https://xxxx/xxxx.jpg)
+                </label>
+              </div> */}
+              <div className="input-group mb-3">
+                <label className="input-group-text" htmlFor="img">
+                  Hình ảnh
+                </label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="img"
+                  name="img"
+                  accept="image/*"
+                  onChange={(e) => handleChangeImgInput(e)}
+                />
+              </div>
+              {/* <div className="form-floating mb-3">
+                <img
+                  className="imgAddProduct"
+                  src={img === "" ? imgExL : img}
+                  alt=""
+                ></img>
+                <br></br>
+                <br></br>
+              </div> */}
             </div>
-            {/* <div className="form-floating mb-3">
-              <input
-                type="text"
-                className="form-control"
-                id="floatingInput"
-                placeholder=""
-                value={img}
-                onChange={(event) => handleChangeImgInput(event)}
-              />
-              <label htmlFor="floatingInput">
-                Hình ảnh (vd: https://xxxx/xxxx.jpg)
-              </label>
-            </div> */}
-            <div className="input-group mb-3">
-              <label className="input-group-text" htmlFor="img">
-                Hình ảnh
-              </label>
-              <input
-                type="file"
-                className="form-control"
-                id="img"
-                name="img"
-                accept="image/*"
-                onChange={(e) => handleChangeImgInput(e)}
-              />
-            </div>
-            {/* <div className="form-floating mb-3">
-              <img
-                className="imgAddProduct"
-                src={img === "" ? imgExL : img}
-                alt=""
-              ></img>
-              <br></br>
-              <br></br>
-            </div> */}
           </div>
         </div>
-      </div>
-      <div className="form-floating mb-3">
-        <button
-          type="button"
-          className="btn btn-success mr-10"
-          onClick={() => onSave()}
-        >
-          Lưu
-        </button>
-        <NavLink type="button" className="btn btn-danger" to="/listProduct">
-          Hủy
-        </NavLink>
-      </div>
-    </>
-  );
+        <div className="form-floating mb-3">
+          <button
+            type="button"
+            className="btn btn-success mr-10"
+            onClick={() => onSave()}
+          >
+            Lưu
+          </button>
+          <NavLink type="button" className="btn btn-danger" to="/listProduct">
+            Hủy
+          </NavLink>
+        </div>
+      </>
+    );
+  } else {
+    navi.push("/");
+  }
 };
 
 export default EditProductPage;

@@ -46,12 +46,32 @@ class BillListPage extends Component {
       return;
     }
   }
-  onDelete = (mahoadon, username) => {
-    this.onAcceptDelete(mahoadon, username);
+  onDelete = (mahoadon, username, chitiethoadon) => {
+    this.onAcceptDelete(mahoadon, username, chitiethoadon);
   };
-  onAcceptDelete = (mahoadon, username) => {
+  updateThanhToan = (mahoadon, username) => {
+    billCallApi("updateBill/", "PATCH", {
+      maHoaDon: mahoadon,
+      username: username,
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success(`Set tình trạng cho hóa đơn mã ${mahoadon} thành công`);
+        } else {
+          toast.error(`Set tình trạng cho hóa đơn mã ${mahoadon} thất bại`);
+        }
+      })
+      .catch((err) => {
+        toast.error(`Set tình trạng cho hóa đơn mã ${mahoadon} thất bại`);
+      });
+  };
+  onAcceptDelete = (mahoadon, username, chiTietHoaDon) => {
     var { bills } = this.state;
-    billCallApi("", "DELETE", { maHoaDon: mahoadon, username: username })
+    billCallApi("", "DELETE", {
+      maHoaDon: mahoadon,
+      username: username,
+      chiTietHoaDon: chiTietHoaDon,
+    })
       .then((res) => {
         if (res.status === 200) {
           toast.success("Xóa thông hóa đơn thành công");
@@ -106,6 +126,7 @@ class BillListPage extends Component {
                     <BillListComponent
                       bills={this.state.bills}
                       onDelete={this.onDelete}
+                      updateThanhToan={this.updateThanhToan}
                     />
                   </div>
                 </div>

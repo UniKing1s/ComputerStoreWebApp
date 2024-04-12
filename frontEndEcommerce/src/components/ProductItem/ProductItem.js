@@ -65,14 +65,14 @@ class ProductItem extends Component {
         <td>
           <NavLink
             type="button"
-            className="btn btn-success mr-10"
+            className="btn btn-success mb-3 mr-10"
             to={"updateProduct/" + product._id}
           >
             Sửa
           </NavLink>
           <button
             type="button"
-            className="btn btn-danger mr-10"
+            className="btn btn-danger mr-10 mb-3"
             onClick={() => this.onDelete(product.masp, product.img)}
           >
             Xóa

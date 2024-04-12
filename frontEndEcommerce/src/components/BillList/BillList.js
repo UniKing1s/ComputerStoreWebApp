@@ -13,6 +13,7 @@ class BillListComponent extends Component {
             bill={bill}
             index={index}
             onDelete={this.props.onDelete}
+            updateThanhToan={this.props.updateThanhToan}
           />
         );
       });
@@ -32,7 +33,7 @@ class BillListComponent extends Component {
               <th scope="col">Tổng tiền</th>
               <th scope="col">Ngày tạo hóa đơn</th>
               <th scope="col">Tình trạng thanh toán</th>
-              <th scope="col">hành động</th>
+              <th scope="col">Hành động</th>
             </tr>
           </thead>
           <tbody>{this.showBillItem(bills)}</tbody>

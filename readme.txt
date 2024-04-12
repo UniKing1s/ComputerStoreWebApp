@@ -1,3 +1,7 @@
+# tài khoản admin
+wow112
+khoivo99122
+
 # fix thanhtoan update cart
 - Giỏ hàng sẽ update lại giá và giảm giả + tổng giả sản phẩm
 - Sửa lại chức năng thanh toán lâu lâu bị lỗi tổng giá hóa đơn khi thêm vào database
@@ -10,3 +14,5 @@
 và khi đổi đường dẫn sang chi tiết hóa đơn của người khác sẽ bị đưa về trang chính
 - Chỉnh giao diện cho chi tiết hóa đơn
 - Hoàn trả hóa đơn chỉ hiệu dụng sau khi đặt hàng 1 ngày kể từ ngày hóa Đơn
+# update 4
+- Phân quyền cho các quyền quản lý user, product

@@ -4,10 +4,20 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 class BillItem extends Component {
   // account = null;
-  onDelete = (mahoadon, username) => {
+  onDelete = (mahoadon, username, chitiethd) => {
     if (window.confirm("Bạn chắc chắc muốn hoàn lại hóa đơn không ?")) {
       // console.log("mhd: " + mahoadon + "and user: " + username);
-      this.props.onDelete(mahoadon, username);
+      this.props.onDelete(mahoadon, username, chitiethd);
+    }
+  };
+  updateThanhToan = (mahoadon, username) => {
+    if (
+      window.confirm(
+        `Bạn chắc chắc hóa đơn mã ${mahoadon} này đã thanh toán không ?`
+      )
+    ) {
+      // console.log("mhd: " + mahoadon + "and user: " + username);
+      this.props.updateThanhToan(mahoadon, username);
     }
   };
 
@@ -44,30 +54,63 @@ class BillItem extends Component {
           <span className={"badge text-bg-" + statusClass}>{tinhtrang}</span>
         </td>
         <td>
-          <NavLink
-            type="button"
-            className="btn btn-success mr-10"
-            to={
-              "ChiTietBill?mahoadon=" + bill.maHoaDon + "&user=" + bill.username
-            }
-          >
-            Xem chi tiết
-          </NavLink>
-          {(today.getTime() >= oneDayLater.getTime() && !bill.tinhtrang) ||
-          (account.role === 0 && account.logged) ? (
+          {!bill.tinhtrang ? (
             <>
               <button
                 type="button"
-                className="btn btn-danger mr-10"
-                onClick={() => this.onDelete(bill.maHoaDon, bill.username)}
+                className="btn btn-warning mb-3 mr-10"
+                onClick={() =>
+                  this.updateThanhToan(bill.maHoaDon, bill.username)
+                }
               >
-                Hoàn trả
+                <strong>Đã thanh toán</strong>
               </button>
             </>
           ) : (
             <>
-              <button type="button" className="btn btn-danger mr-10" disabled>
-                Hoàn trả
+              <button
+                type="button"
+                className="btn btn-warning mb-3 mr-10"
+                disabled
+              >
+                <strong>Đã thanh toán</strong>
+              </button>
+            </>
+          )}
+          <NavLink
+            type="button"
+            className="btn btn-success mb-3 mr-10"
+            to={
+              "ChiTietBill?mahoadon=" + bill.maHoaDon + "&user=" + bill.username
+            }
+          >
+            <strong>Xem chi tiết</strong>
+          </NavLink>
+          {(today.getTime() >= oneDayLater.getTime() && !bill.tinhtrang) ||
+          (account.role === 0 && account.logged && !bill.tinhtrang) ? (
+            <>
+              <button
+                type="button"
+                className="btn btn-danger mb-3 mr-10"
+                onClick={() =>
+                  this.onDelete(
+                    bill.maHoaDon,
+                    bill.username,
+                    bill.chiTietHoaDon
+                  )
+                }
+              >
+                <strong>Hoàn trả</strong>
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                className="btn btn-danger mb-3 mr-10"
+                disabled
+              >
+                <strong>Hoàn trả</strong>
               </button>
             </>
           )}

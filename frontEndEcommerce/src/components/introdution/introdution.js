@@ -6,7 +6,7 @@ class Introdution extends Component {
       <div id="carouselExample" className="carousel slide w-100 mt-10">
         <div
           className="carousel-inner m-l-r"
-          style={{ height: "125px", margin: "auto", width: "90%" }}
+          style={{ height: "500px", margin: "auto", width: "100%" }}
         >
           <div className="carousel-item active">
             <img

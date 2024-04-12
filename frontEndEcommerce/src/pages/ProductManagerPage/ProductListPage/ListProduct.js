@@ -6,6 +6,8 @@ import { NavLink } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import productCallApi, { imageDeleteCallApi } from "../../../utils/apiCaller";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 // import GetAccountRole from "../../../service/getAccountRole";
 // import SendToLink from "../../../service/sendToLink";
 
@@ -75,45 +77,57 @@ class ListProduct extends Component {
     return result;
   };
   render() {
+    const { account, history } = this.props;
     // const acc = accountSlice.reducer((state) => state.account);
     // console.log(acc);
-    var products = this.state.products;
-    return (
-      <div>
-        <ToastContainer />
-        {this.loading ? (
-          <div className="container mt-10">
-            <div className="spinner-border text-primary m-a" role="status">
-              <span className="visually-hidden">Loading...</span>
+    if (account.role === 0 && account.logged) {
+      var products = this.state.products;
+      return (
+        <div>
+          <ToastContainer />
+          {this.loading ? (
+            <div className="container mt-10">
+              <div className="spinner-border text-primary m-a" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="container">
-            <div className="row justify-content-center align-items-center g-2">
-              <div className="col">
-                <NavLink
-                  to="/addProduct"
-                  className="btn btn-primary mt-10 m-a"
-                  //type="button"
-                  //value="Thêm sản phẩm"
-                >
-                  Thêm sản phẩm
-                </NavLink>
-                <div className="panel panel-primary li-box">
-                  <div className="panel-heading">
-                    <h3 className="panel-tittle">Danh sách sản phẩm</h3>
-                  </div>
-                  <div className="panel-body">
-                    <ProductList products={products} onDelete={this.onDelete} />
+          ) : (
+            <div className="container">
+              <div className="row justify-content-center align-items-center g-2">
+                <div className="col">
+                  <NavLink
+                    to="/addProduct"
+                    className="btn btn-primary mt-10 m-a"
+                    //type="button"
+                    //value="Thêm sản phẩm"
+                  >
+                    Thêm sản phẩm
+                  </NavLink>
+                  <div className="panel panel-primary li-box">
+                    <div className="panel-heading">
+                      <h3 className="panel-tittle">Danh sách sản phẩm</h3>
+                    </div>
+                    <div className="panel-body">
+                      <ProductList
+                        products={products}
+                        onDelete={this.onDelete}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-    );
+          )}
+        </div>
+      );
+    } else {
+      history.push("/");
+    }
   }
 }
+
+const mapStateToProps = (state) => ({
+  account: state.account, // Replace with your slice/property
+});
 // connect(accountSlice.reducer)(ListProduct);
-export default ListProduct;
+export default connect(mapStateToProps)(withRouter(ListProduct));

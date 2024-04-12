@@ -5,6 +5,8 @@ import React, { Component } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { accountsCallApi } from "../../../utils/apiCaller";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom/cjs/react-router-dom.min";
 // import GetAccountRole from "../../../service/getAccountRole";
 // import SendToLink from "../../../service/sendToLink";
 
@@ -69,39 +71,47 @@ class ListUser extends Component {
     return result;
   };
   render() {
+    const { account, history } = this.props;
+
     // const acc = accountSlice.reducer((state) => state.account);
     // console.log(acc);
-    return (
-      <div>
-        <ToastContainer />
-        {this.loading ? (
-          <div className="container mt-10">
-            <div className="spinner-border text-primary m-a" role="status">
-              <span className="visually-hidden">Loading...</span>
+    if (account.role === 0 && account.logged) {
+      return (
+        <div>
+          <ToastContainer />
+          {this.loading ? (
+            <div className="container mt-10">
+              <div className="spinner-border text-primary m-a" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="container">
-            <div className="row justify-content-center align-items-center g-2">
-              <div className="col">
-                <div className="panel panel-primary li-box mt-10">
-                  <div className="panel-heading">
-                    <h3 className="panel-tittle">Danh sách người dùng</h3>
-                  </div>
-                  <div className="panel-body">
-                    <UserList
-                      users={this.state.users}
-                      onDelete={this.onDelete}
-                    />
+          ) : (
+            <div className="container">
+              <div className="row justify-content-center align-items-center g-2">
+                <div className="col">
+                  <div className="panel panel-primary li-box mt-10">
+                    <div className="panel-heading">
+                      <h3 className="panel-tittle">Danh sách người dùng</h3>
+                    </div>
+                    <div className="panel-body">
+                      <UserList
+                        users={this.state.users}
+                        onDelete={this.onDelete}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-    );
+          )}
+        </div>
+      );
+    } else {
+      history.push("/");
+    }
   }
 }
-// connect(accountSlice.reducer)(ListProduct);
-export default ListUser;
+const mapStateToProps = (state) => ({
+  account: state.account, // Replace with your slice/property
+});
+export default connect(mapStateToProps)(withRouter(ListUser));

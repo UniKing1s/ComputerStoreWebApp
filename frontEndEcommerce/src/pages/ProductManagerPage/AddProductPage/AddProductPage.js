@@ -4,9 +4,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import productCallApi, { brandCallApi } from "../../../utils/apiCaller";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 // import Select from "react-select";
 // import FileSaver from "file-saver";
 const AddProductPage = () => {
+  const _account = useSelector((state) => state.account);
+  const navi = useHistory();
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
@@ -24,7 +28,7 @@ const AddProductPage = () => {
   };
   let formData = new FormData();
   useEffect(() => {
-    if (brand.length === 0) {
+    if (brand.length === 0 && _account.role === 0 && _account.logged) {
       // let brands;
       const getBrand = () => {
         brandCallApi("/", "get", null)
@@ -133,177 +137,185 @@ const AddProductPage = () => {
   //     }
   //   }
 
-  return (
-    <>
-      <ToastContainer />
-      <div className="container">
-        <div className="panel panel-primary w-50 magin-a box">
-          <div
-            className="container"
-            style={{ width: "95%", marginTop: "20px" }}
-          >
-            <div className="panel-heading">
-              <h3 className="panel-tittle" style={{ textAlign: "center" }}>
-                Thêm sản phẩm
-              </h3>
-            </div>
-            <div className="panel-body">
-              <div className="form-floating mb-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="floatingInput"
-                  placeholder="Tên sản phẩm"
-                  name="name"
-                  value={name}
-                  onChange={(event) => {
-                    setName(event.target.value);
-                  }}
-                />
-                <label htmlFor="floatingInput">Tên sản phẩm</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  type="number"
-                  className="form-control"
-                  id="floatingInput"
-                  placeholder="Số lượng"
-                  name="quantity"
-                  value={quantity}
-                  onChange={(event) => {
-                    setQuantity(event.target.value);
-                  }}
-                />
-                <label htmlFor="floatingInput">Số lượng</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  type="number"
-                  className="form-control"
-                  id="floatingInput"
-                  placeholder="Giá trị"
-                  name="price"
-                  value={price}
-                  onChange={(event) => {
-                    setPrice(event.target.value);
-                  }}
-                />
-                <label htmlFor="floatingInput">Giá trị</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  type="number"
-                  className="form-control"
-                  id="floatingInput"
-                  placeholder="Giảm giá"
-                  name="sale"
-                  min={0}
-                  max={100}
-                  value={sale}
-                  onChange={(event) => {
-                    setSale(event.target.value);
-                  }}
-                />
-                <label htmlFor="floatingInput">Giảm giá</label>
-              </div>
-              <div className="input-group mb-3">
-                <label
-                  className="input-group-text"
-                  htmlFor="inputGroupSelect01"
-                >
-                  Hãng
-                </label>
-                <select
-                  className="form-select"
-                  id="inputGroupSelect01"
-                  name="type"
-                  value={brandchoose}
-                  onChange={(event) => {
-                    setBrandChoose(event.target.value);
-                  }}
-                >
-                  <option value={""}>Choose...</option>
-                  {brand.map((option, index) => (
-                    <option key={index} value={option.id}>
-                      {option.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-floating mb-3">
-                <textarea
-                  type="text"
-                  className="form-control"
-                  id="decribtion"
-                  placeholder="Mô tả sản phẩm"
-                  name="decribtion"
-                  value={decribtion}
-                  onChange={(event) => {
-                    setDecribtion(event.target.value);
-                  }}
-                />
-                <label htmlFor="floatingInput">Mô tả</label>
-              </div>
-
-              <div className="form-floating mb-3">
-                <div className="form-check form-switch">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    role="switch"
-                    id="flexSwitchCheckDefault"
-                    checked={status === "còn hàng" ? true : false}
-                    onChange={() => handleChangeStatus()}
-                  />
-                  <label
-                    className="form-check-label lbl"
-                    htmlFor="flexSwitchCheckDefault"
-                  >
-                    {status === "còn hàng" ? "Còn hàng" : "Hết hàng"}
-                  </label>
-                </div>
-              </div>
-
-              <div className="input-group mb-3">
-                <label className="input-group-text" htmlFor="img">
-                  Hình ảnh
-                </label>
-                <input
-                  type="file"
-                  className="form-control"
-                  id="img"
-                  name="img"
-                  accept="image/*"
-                  onChange={(event) => handleChangeImgInput(event)}
-                />
-              </div>
-              {/*<div className="form-floating mb-3">
-                  <img
-                    className="imgAddProduct"
-                    src={this.state.img === "" ? this.imgExL : this.img}
-                    alt=""
-                  ></img>
-                  <br></br>
-                  <br></br>
-                </div>*/}
-            </div>
-          </div>
-          <div className="form-floating mb-3">
-            <button
-              type="button"
-              className="btn btn-success mr-10"
-              onClick={() => onSave()}
+  if (_account.role === 0 && _account.logged) {
+    return (
+      <>
+        <ToastContainer />
+        <div className="container">
+          <div className="panel panel-primary w-50 magin-a box">
+            <div
+              className="container"
+              style={{ width: "95%", marginTop: "20px" }}
             >
-              Lưu
-            </button>
-            <NavLink type="button" className="btn btn-danger" to="/listProduct">
-              Hủy
-            </NavLink>
+              <div className="panel-heading">
+                <h3 className="panel-tittle" style={{ textAlign: "center" }}>
+                  Thêm sản phẩm
+                </h3>
+              </div>
+              <div className="panel-body">
+                <div className="form-floating mb-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="floatingInput"
+                    placeholder="Tên sản phẩm"
+                    name="name"
+                    value={name}
+                    onChange={(event) => {
+                      setName(event.target.value);
+                    }}
+                  />
+                  <label htmlFor="floatingInput">Tên sản phẩm</label>
+                </div>
+                <div className="form-floating mb-3">
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="floatingInput"
+                    placeholder="Số lượng"
+                    name="quantity"
+                    value={quantity}
+                    onChange={(event) => {
+                      setQuantity(event.target.value);
+                    }}
+                  />
+                  <label htmlFor="floatingInput">Số lượng</label>
+                </div>
+                <div className="form-floating mb-3">
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="floatingInput"
+                    placeholder="Giá trị"
+                    name="price"
+                    value={price}
+                    onChange={(event) => {
+                      setPrice(event.target.value);
+                    }}
+                  />
+                  <label htmlFor="floatingInput">Giá trị</label>
+                </div>
+                <div className="form-floating mb-3">
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="floatingInput"
+                    placeholder="Giảm giá"
+                    name="sale"
+                    min={0}
+                    max={100}
+                    value={sale}
+                    onChange={(event) => {
+                      setSale(event.target.value);
+                    }}
+                  />
+                  <label htmlFor="floatingInput">Giảm giá</label>
+                </div>
+                <div className="input-group mb-3">
+                  <label
+                    className="input-group-text"
+                    htmlFor="inputGroupSelect01"
+                  >
+                    Hãng
+                  </label>
+                  <select
+                    className="form-select"
+                    id="inputGroupSelect01"
+                    name="type"
+                    value={brandchoose}
+                    onChange={(event) => {
+                      setBrandChoose(event.target.value);
+                    }}
+                  >
+                    <option value={""}>Choose...</option>
+                    {brand.map((option, index) => (
+                      <option key={index} value={option.id}>
+                        {option.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-floating mb-3">
+                  <textarea
+                    type="text"
+                    className="form-control"
+                    id="decribtion"
+                    placeholder="Mô tả sản phẩm"
+                    name="decribtion"
+                    value={decribtion}
+                    onChange={(event) => {
+                      setDecribtion(event.target.value);
+                    }}
+                  />
+                  <label htmlFor="floatingInput">Mô tả</label>
+                </div>
+
+                <div className="form-floating mb-3">
+                  <div className="form-check form-switch">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      role="switch"
+                      id="flexSwitchCheckDefault"
+                      checked={status === "còn hàng" ? true : false}
+                      onChange={() => handleChangeStatus()}
+                    />
+                    <label
+                      className="form-check-label lbl"
+                      htmlFor="flexSwitchCheckDefault"
+                    >
+                      {status === "còn hàng" ? "Còn hàng" : "Hết hàng"}
+                    </label>
+                  </div>
+                </div>
+
+                <div className="input-group mb-3">
+                  <label className="input-group-text" htmlFor="img">
+                    Hình ảnh
+                  </label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="img"
+                    name="img"
+                    accept="image/*"
+                    onChange={(event) => handleChangeImgInput(event)}
+                  />
+                </div>
+                {/*<div className="form-floating mb-3">
+                    <img
+                      className="imgAddProduct"
+                      src={this.state.img === "" ? this.imgExL : this.img}
+                      alt=""
+                    ></img>
+                    <br></br>
+                    <br></br>
+                  </div>*/}
+              </div>
+            </div>
+            <div className="form-floating mb-3">
+              <button
+                type="button"
+                className="btn btn-success mr-10"
+                onClick={() => onSave()}
+              >
+                Lưu
+              </button>
+              <NavLink
+                type="button"
+                className="btn btn-danger"
+                to="/listProduct"
+              >
+                Hủy
+              </NavLink>
+            </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  } else {
+    navi.push("/");
+  }
 };
 // }
 

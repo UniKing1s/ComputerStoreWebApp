@@ -1,4 +1,5 @@
 import { billModel } from "../models/billModel.js";
+import { productModel } from "../models/productModel.js";
 
 export const createBill = async (req, res) => {
   try {
@@ -76,6 +77,7 @@ export const getBillByUser = async (req, res) => {
 export const deleteBill = async (req, res) => {
   try {
     const deleteBill = req.body;
+    await _updateBillHoaTra(deleteBill.chiTietHoaDon);
     await billModel.deleteOne({
       maHoaDon: deleteBill.maHoaDon,
       username: deleteBill.username,
@@ -85,5 +87,32 @@ export const deleteBill = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err });
     console.log("err");
+  }
+};
+
+export const upadteBillPayed = async (req, res) => {
+  try {
+    const billPayed = req.body;
+    await billModel.updateOne(
+      {
+        maHoaDon: billPayed.maHoaDon,
+        username: billPayed.username,
+      },
+      { $set: { tinhtrang: true } }
+    );
+    res.status(200).json({ updateTinhTrang: "success" });
+    console.log("update bill");
+  } catch (err) {
+    res.status(500).json({ error: err });
+    console.log("err");
+  }
+};
+
+const _updateBillHoaTra = async (products) => {
+  for (let product of products) {
+    await productModel.updateOne(
+      { masp: product.masp },
+      { $inc: { quantity: product.quantity } }
+    );
   }
 };
