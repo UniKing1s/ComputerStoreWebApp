@@ -54,29 +54,34 @@ class BillItem extends Component {
           <span className={"badge text-bg-" + statusClass}>{tinhtrang}</span>
         </td>
         <td>
-          {!bill.tinhtrang ? (
-            <>
-              <button
-                type="button"
-                className="btn btn-warning mb-3 mr-10"
-                onClick={() =>
-                  this.updateThanhToan(bill.maHoaDon, bill.username)
-                }
-              >
-                <strong>Đã thanh toán</strong>
-              </button>
-            </>
+          {account.role === 0 && account.logged ? (
+            !bill.tinhtrang ? (
+              <>
+                <button
+                  type="button"
+                  className="btn btn-warning mb-3 mr-10"
+                  onClick={() =>
+                    this.updateThanhToan(bill.maHoaDon, bill.username)
+                  }
+                >
+                  <strong>Đã thanh toán</strong>
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="btn btn-warning mb-3 mr-10"
+                  disabled
+                >
+                  <strong>Đã thanh toán</strong>
+                </button>
+              </>
+            )
           ) : (
-            <>
-              <button
-                type="button"
-                className="btn btn-warning mb-3 mr-10"
-                disabled
-              >
-                <strong>Đã thanh toán</strong>
-              </button>
-            </>
+            <></>
           )}
+
           <NavLink
             type="button"
             className="btn btn-success mb-3 mr-10"

@@ -16,3 +16,6 @@ và khi đổi đường dẫn sang chi tiết hóa đơn của người khác s
 - Hoàn trả hóa đơn chỉ hiệu dụng sau khi đặt hàng 1 ngày kể từ ngày hóa Đơn
 # update 4
 - Phân quyền cho các quyền quản lý user, product
+# update 5
+- sửa billPage đặt đã thanh toán (set quyền)
+- sửa một số giao diện 
