@@ -23,3 +23,5 @@ và khi đổi đường dẫn sang chi tiết hóa đơn của người khác s
 - sửa xóa sản phẩm của admin khi ở trang search
 - Sửa giao diện HomePage
 - loading img = lazy
+# update 6.1
+- cập nhật lại file ảnh ở backend
