@@ -9,6 +9,8 @@ import {
   updateProduct,
   getSearchProduct,
   updateProductPayed,
+  getProductByBrand,
+  getProductOnSale,
 } from "../controllers/products.js";
 // import multer from "multer";
 const router = express.Router();
@@ -35,6 +37,8 @@ router.post("/uploadImage/", createImage);
 //get product byId()
 router.put("/byId/", getProductById);
 router.get("/byMaSp/:masp", getProductByMaSp);
+router.get("/brand/:brand", getProductByBrand);
+router.get("/sale", getProductOnSale);
 // router.delete("/product", deleteProduct);
 //delete product
 router.delete("/", deleteProduct);

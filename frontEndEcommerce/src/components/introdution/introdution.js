@@ -3,37 +3,54 @@ import "./introdution.scss";
 class Introdution extends Component {
   render() {
     return (
-      <div id="carouselExample" className="carousel slide w-100 mt-10">
+      <div
+        id="carouselExampleIndicators"
+        className="carousel slide w-100 mb-3"
+        data-bs-ride="carousel"
+        data-bs-interval="5000"
+      >
         <div
           className="carousel-inner m-l-r"
-          style={{ height: "500px", margin: "auto", width: "100%" }}
+          id="carousel-iner"
+          style={{
+            maxHeight: "500px",
+            margin: "auto",
+            width: "100%",
+            objectFit: "cover",
+          }}
         >
           <div className="carousel-item active">
             <img
               src="https://i.imgur.com/CvRKNQL.jpg"
+              loading="lazy"
               className="d-block w-100"
               alt="..."
+              style={{ objectFit: "cover" }}
             />
           </div>
           <div className="carousel-item">
             <img
               src="https://i.imgur.com/GjyjXhZ.jpg"
+              loading="lazy"
               className="d-block w-100"
               alt="..."
+              style={{ objectFit: "cover" }}
             />
           </div>
           <div className="carousel-item">
             <img
               src="https://i.imgur.com/CvRKNQL.jpg"
+              loading="lazy"
               className="d-block w-100"
               alt="..."
+              style={{ objectFit: "cover" }}
             />
           </div>
         </div>
         <button
           className="carousel-control-prev"
           type="button"
-          data-bs-target="#carouselExample"
+          data-bs-target="#carouselExampleIndicators"
           data-bs-slide="prev"
         >
           <span
@@ -45,7 +62,7 @@ class Introdution extends Component {
         <button
           className="carousel-control-next"
           type="button"
-          data-bs-target="#carouselExample"
+          data-bs-target="#carouselExampleIndicators"
           data-bs-slide="next"
         >
           <span

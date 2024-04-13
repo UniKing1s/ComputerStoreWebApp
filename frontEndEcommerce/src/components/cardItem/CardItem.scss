@@ -1,27 +1,57 @@
-// .tc{
-//     text-align: center;
+
+// .img-card{
+//     aspect-radio: 3/2;
+//     object-fit : cover;
+//     // mix-blend-mode: color-burn;
 // }
-// .imgCard{
-//     width: 100%;
-//     height: 300px;
+// #CardDiv{
+//     margin: 10px;
+//     width: calc(100%/4);
 // }
-// .cardHeight{
-//     height: 100%;
+// @media screen and (min-width: 1300px) {
+//     // #CardDiv{
+//     //     width: 50%;
+//     //     height: 30%;
+//     // }
+//     // #CardDivItem{
+//     //     height: 100%;
+//     //     width: 100%;
+//     // }
+//     // .img-card{
+//     //     width: 350px;
+//     //     height: 75px ;
+//     // }
+//     // .NavUrl{
+//     //     width: 350px;
+//     //     height: 75px ;
+//     //     max-height: 75px;
+//     // }
+//     .card-title{
+//         font-size: 15px;
+//         height: 50px;
+//     }
+
 // }
-// .mr-10{
-//     margin-right: 10px;
+// @media screen and (max-width: 768px) {
+//     #CardDiv{
+//         width: 50%;
+//         height: 30%;
+//     }
+//     // #CardDivItem{
+//     //     height: 100%;
+//     //     width: 100%;
+//     // }
+//     // .img-card{
+//     //     width: 350px;
+//     //     height: 75px ;
+//     // }
+//     // .NavUrl{
+//     //     width: 350px;
+//     //     height: 75px ;
+//     //     max-height: 75px;
+//     // }
+//     .card-title{
+//         font-size: 10px;
+//         height: 30px;
+//     }
 // }
-// .pcenter{
-//     position: relative;
-// }
-// .positionFix{
-//     position: fixed;
-// }
-// .mask-st{
-//     background-color: rgba(251, 251, 251, 0.15);
-// }
-.img-card{
-    aspect-radio: 3/2;
-    object-fit : contain;
-    // mix-blend-mode: color-burn;
-}

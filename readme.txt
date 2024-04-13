@@ -19,3 +19,7 @@ và khi đổi đường dẫn sang chi tiết hóa đơn của người khác s
 # update 5
 - sửa billPage đặt đã thanh toán (set quyền)
 - sửa một số giao diện 
+# update 6 
+- sửa xóa sản phẩm của admin khi ở trang search
+- Sửa giao diện HomePage
+- loading img = lazy

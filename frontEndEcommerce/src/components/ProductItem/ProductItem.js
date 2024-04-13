@@ -43,6 +43,7 @@ class ProductItem extends Component {
           >
             <img
               src={imgAPI_URL + product.img}
+              loading="lazy"
               className="object-fit-contain border rounded"
               style={{
                 maxWidth: "100px",

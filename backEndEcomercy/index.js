@@ -31,6 +31,13 @@ app.use(
   })
 );
 
+// app.use(
+//   cors({
+//     origin: "*",
+//     methods: ["POST", "PUT", "GET", "DELETE", "PATCH"],
+//     credentials: true,
+//   })
+// );
 // use to show image
 app.use(express.static("public"));
 ////sử dụng multer để sử lí upload file

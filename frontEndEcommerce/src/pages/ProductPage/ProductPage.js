@@ -56,7 +56,27 @@ const ProductPage = (props) => {
   useEffect(() => {
     getProductById(param.id);
   });
-
+  const handleDecribtion = () => {
+    const lst = product.current.decribtion.split("\n");
+    var result = [];
+    for (let line of lst) {
+      const lineLst = line.split(":");
+      result.push(handleLabel(lineLst));
+    }
+    // console.log(result);
+    return result;
+  };
+  const handleLabel = (lineLst) => {
+    return (
+      <>
+        <label style={{ fontSize: "15px" }}>
+          <strong style={{ fontWeight: "bold" }}>{lineLst[0]}</strong>:{" "}
+          {lineLst[1]}
+        </label>
+        <br></br>
+      </>
+    );
+  };
   return (
     <div key={props.index}>
       <ToastContainer />
@@ -141,9 +161,15 @@ const ProductPage = (props) => {
                       Mô tả:
                     </div>
                     <br></br>
-                    <p className="lead" style={{ textAlign: "left" }}>
-                      {product.current.decribtion}
-                    </p>
+                    <br></br>
+                    <label
+                      className="lead form-control mb-3"
+                      style={{ textAlign: "left", backgroundColor: "#C0C0C0" }}
+                    >
+                      {/* {product.current.decribtion} */}
+                      {handleDecribtion()}
+                      {/* {decribtion.current} */}
+                    </label>
                     <div className="d-flex" style={{ alignItems: "center" }}>
                       <input
                         className="form-control text-center me-3"

@@ -28,6 +28,37 @@ export const getProductById = async (req, res) => {
     console.log("err");
   }
 };
+
+export const getProductByBrand = async (req, res) => {
+  try {
+    const brand = req.params.brand;
+    console.log(brand);
+    const products = await productModel.find({ type: brand });
+    res.json(products);
+    console.log("products: ", products);
+  } catch (err) {
+    res.status(500).json({ error: err });
+    console.log("err");
+  }
+};
+
+export const getProductOnSale = async (req, res) => {
+  try {
+    // const brand = req.params.brand;
+    // console.log(brand);
+    const products = await productModel
+      .find({
+        sale: { $exists: true, $ne: 0 },
+      })
+      .sort({ sale: -1 });
+    res.json(products);
+    console.log("products: ", products);
+  } catch (err) {
+    res.status(500).json({ error: err });
+    console.log("err");
+  }
+};
+
 export const getProductByMaSp = async (req, res) => {
   try {
     const masp = req.params.masp;

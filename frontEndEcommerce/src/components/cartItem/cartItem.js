@@ -62,6 +62,7 @@ const CartItem = (props) => {
             <img
               src={imgAPI_URL + cartItem.img}
               className="object-fit-contain border rounded"
+              loading="lazy"
               style={{
                 maxWidth: "100px",
                 maxHeight: "100px",
