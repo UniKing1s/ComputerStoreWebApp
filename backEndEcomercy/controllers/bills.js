@@ -12,8 +12,8 @@ export const createBill = async (req, res) => {
       console.log("có max mã");
       console.log(maxBill[0]);
       newBill["maHoaDon"] = Number(maxBill[0].maHoaDon) + 1;
-      newBill["ngayHoaDon"] = new Date();
     }
+    newBill["ngayHoaDon"] = new Date();
     console.log(newBill);
     const bill = new billModel(newBill);
     await bill.save();

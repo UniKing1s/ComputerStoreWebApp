@@ -27,6 +27,21 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
+    const getProductsSale = async () => {
+      await productCallApi("sale", "get")
+        .then((res) => {
+          //console.log(res.data);
+          setProduct(res.data);
+          // console.log(products);
+        })
+        .catch((err) => {
+          toast.error("Không có sản phẩm tương ứng");
+        })
+        .finally(() => {
+          setLoading(false);
+          // console.log(products);
+        });
+    };
     const getProducts = async () => {
       await productCallApi("search/", "post", { name: name })
         .then((res) => {
@@ -39,14 +54,18 @@ const SearchPage = () => {
         })
         .finally(() => {
           setLoading(false);
-          console.log(products);
+          // console.log(products);
         });
     };
     if (!name || name.replaceAll(" ", "") === "") {
       toast.error("Không có nội dung tìm kiếm");
       setLoading(false);
     } else {
-      getProducts();
+      if (name.toLowerCase() === "sale") {
+        getProductsSale();
+      } else {
+        getProducts();
+      }
     }
   }, [name]);
   const onAcceptDelete = (id, img) => {

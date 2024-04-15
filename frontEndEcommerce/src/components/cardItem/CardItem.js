@@ -180,7 +180,7 @@ const CardItem = (props) => {
         //     : "col-lg-3 col-md-6 col-sm-6 carousel-item"
         // }
         // carousel-item active
-        // id="CardDiv"
+        id="CardDiv"
         style={{ height: "50%" }}
       >
         <div className="card my-2 shadow-0" style={{ height: "100%" }}>

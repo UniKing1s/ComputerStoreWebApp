@@ -2,14 +2,20 @@ import React, { Component } from "react";
 import CardItem from "../../components/cardItem/CardItem";
 import Introdution from "../../components/introdution/introdution";
 import "./HomePage.scss";
-import productCallApi, { imageDeleteCallApi } from "../../utils/apiCaller";
+import productCallApi, {
+  brandCallApi,
+  imageDeleteCallApi,
+} from "../../utils/apiCaller";
 import { ToastContainer, toast } from "react-toastify";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import Navigator from "../../components/Navigator/Navigator";
+
 class HomePage extends Component {
   state = {
     products: [],
     products1: [],
     producSale: [],
+    brands: [],
     // account: null,
   };
   loading = true;
@@ -22,32 +28,38 @@ class HomePage extends Component {
     //   });
     //   this.loading = false;
     // });
-
-    productCallApi("brand/MSI", "GET", null).then((res) => {
-      if (res.status === 200) {
-        const data = res.data;
-        // console.log(data);
+    brandCallApi("", "GET").then((resBrand) => {
+      if (resBrand.status === 200) {
         this.setState({
-          products: data,
+          brands: resBrand.data,
         });
-        productCallApi("brand/ACER", "GET")
-          .then((res1) => {
-            if (res1.status === 200) {
-              // const updatedProduct2 = [...this.state.products, ...res1.data];
-              this.setState({
-                products1: res1.data,
-              });
-              productCallApi("sale", "GET").then((res2) => {
-                if (res2.status === 200) {
+        productCallApi("brand/MSI", "GET", null).then((res) => {
+          if (res.status === 200) {
+            const data = res.data;
+            // console.log(data);
+            this.setState({
+              products: data,
+            });
+            productCallApi("brand/ACER", "GET")
+              .then((res1) => {
+                if (res1.status === 200) {
+                  // const updatedProduct2 = [...this.state.products, ...res1.data];
                   this.setState({
-                    producSale: res2.data,
+                    products1: res1.data,
+                  });
+                  productCallApi("sale", "GET").then((res2) => {
+                    if (res2.status === 200) {
+                      this.setState({
+                        producSale: res2.data,
+                      });
+                    }
                   });
                 }
-              });
-            }
-            this.loading = false;
-          })
-          .catch((error) => {});
+                this.loading = false;
+              })
+              .catch((error) => {});
+          }
+        });
       }
     });
   }
@@ -209,6 +221,8 @@ class HomePage extends Component {
           ) : (
             <>
               <Introdution />
+              <Navigator brands={this.state.brands}></Navigator>
+
               {/* <div className="container mt-10">
                 <div className="text-center">
                   <div id="itemContent">{this.showCardItem()}</div>
@@ -241,7 +255,7 @@ class HomePage extends Component {
                     <strong>Siêu Sale</strong>
                   </label>
                   <NavLink
-                    to={"/search?name=ACER"}
+                    to={"/search?name=sale"}
                     style={{
                       marginRight: "20px",
                       float: "right",
@@ -253,7 +267,7 @@ class HomePage extends Component {
                       color: "black",
                     }}
                   >
-                    Xem tất cả
+                    <strong>Xem tất cả</strong>
                   </NavLink>
                 </div>
                 {/* </div> */}
@@ -343,7 +357,7 @@ class HomePage extends Component {
                       color: "black",
                     }}
                   >
-                    Xem tất cả
+                    <strong>Xem tất cả</strong>
                   </NavLink>
                 </div>
                 {/* </div> */}
@@ -433,7 +447,7 @@ class HomePage extends Component {
                       color: "black",
                     }}
                   >
-                    Xem tất cả
+                    <strong>Xem tất cả</strong>
                   </NavLink>
                 </div>
                 {/* </div> */}

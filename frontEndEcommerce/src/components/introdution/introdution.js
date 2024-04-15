@@ -21,8 +21,7 @@ class Introdution extends Component {
         >
           <div className="carousel-item active">
             <img
-              src="https://i.imgur.com/CvRKNQL.jpg"
-              loading="lazy"
+              src="banner1.png"
               className="d-block w-100"
               alt="..."
               style={{ objectFit: "cover" }}
@@ -30,8 +29,7 @@ class Introdution extends Component {
           </div>
           <div className="carousel-item">
             <img
-              src="https://i.imgur.com/GjyjXhZ.jpg"
-              loading="lazy"
+              src="banner2.png"
               className="d-block w-100"
               alt="..."
               style={{ objectFit: "cover" }}
@@ -39,8 +37,7 @@ class Introdution extends Component {
           </div>
           <div className="carousel-item">
             <img
-              src="https://i.imgur.com/CvRKNQL.jpg"
-              loading="lazy"
+              src="banner3.png"
               className="d-block w-100"
               alt="..."
               style={{ objectFit: "cover" }}

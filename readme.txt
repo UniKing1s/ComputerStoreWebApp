@@ -25,3 +25,7 @@ và khi đổi đường dẫn sang chi tiết hóa đơn của người khác s
 - loading img = lazy
 # update 6.1
 - cập nhật lại file ảnh ở backend
+# update 7
+- cập nhật banner, navigator
+- xử lí hover cho các thẻ
+- backend sửa lỗi không tạo ngày cho hóa đơn đầu tiên
